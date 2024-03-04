@@ -17,7 +17,7 @@ namespace Engine.Models
         private int _level;
         private int _experiencePoints;
         private int _gold;
-        
+
 
         public string Name
         {
@@ -74,7 +74,7 @@ namespace Engine.Models
             }
         }
         public ObservableCollection<GameItem> Inventory { get; set; }
-        public List<GameItem> Weapons => Inventory.Where(i=> i is Weapon).ToList();
+        public List<GameItem> Weapons => Inventory.Where(i => i is Weapon).ToList();
         public ObservableCollection<QuestStatus> Quests { get; set; }
         #endregion
         public Player()
@@ -86,6 +86,22 @@ namespace Engine.Models
         {
             Inventory.Add(item);
             OnPropertyChanged(nameof(Weapons));
+        }
+        public void RemoveItemFromInventory(GameItem item)
+        {
+            Inventory.Remove(item);
+            OnPropertyChanged(nameof(Weapon));
+        }
+        public bool HasAllTheseItems(List<ItemQuantity> items)
+        {
+            foreach (var item in items)
+            {
+                if (Inventory.Count(i => i.ItemTypeId == item.ItemID) < item.Quantity)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
