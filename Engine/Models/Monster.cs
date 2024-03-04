@@ -18,7 +18,7 @@ namespace Engine.Models
             )
         {
             Name = name;
-            ImageName = string.Format("/Engine;component/Images/Monsters/{0}", imageName);
+            ImageName = string.Format($"/Engine;component/Images/Monsters/{imageName}");
             MaxiumHitPoints = maxiumHitPoints;
             HitPoints = hitPoints;
             RewardExperiencePoints = rewardExperiencePoints;

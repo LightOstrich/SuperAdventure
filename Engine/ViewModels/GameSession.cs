@@ -118,7 +118,7 @@ namespace Engine.ViewModels
         {
             if (CurrentWeapon == null)
             {
-                RaiseMessage("You must select a waepon, to attack");
+                RaiseMessage("You must select a weapon, to attack");
                 return;
             }
             //Determine damage to monster
