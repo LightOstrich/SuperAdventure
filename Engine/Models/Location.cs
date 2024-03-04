@@ -16,6 +16,7 @@ namespace Engine.Models
         public string ImageName { get; set; }
         public List<Quest> QuestsAvailableHere { get; set; } = new List<Quest>();
         public List<MonsterEncounter> MonstersHere { get; set; } = new List<MonsterEncounter>();
+        public Trader TraderHere { get; set; }
 
         public void AddMonster(int monsterID, int chanceOfEncountering)
         {
@@ -38,7 +39,7 @@ namespace Engine.Models
                 return null;
             }
             // Total the percentages of all monsters at this location.
-            int totalChance = MonstersHere.Sum(m =>m.ChanceOfEncountering);
+            int totalChance = MonstersHere.Sum(m => m.ChanceOfEncountering);
             // Select a random number between 1 and the total (in case the total chances is not 100).
             int randomNumber = RandomNumberGenerator.NumberBetween(1, totalChance);
             // Loop through the monster list, 
