@@ -62,6 +62,5 @@ namespace WPFUI
             tradeScreen.DataContext = _gameSession;
             tradeScreen.ShowDialog();
         }
-
     }
 }
