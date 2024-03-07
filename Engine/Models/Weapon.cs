@@ -8,9 +8,9 @@ namespace Engine.Models
 {
     public class Weapon : GameItem
     {
-        public int MinimumDamage {  get; set; }
-        public int MaximumDamage { get; set; }
-        public Weapon(int itemTypeId, string name, int price, int minimumDamage, int maximumDamage) : base(itemTypeId, name, price,true)
+        public int MinimumDamage { get; }
+        public int MaximumDamage { get; }
+        public Weapon(int itemTypeId, string name, int price, int minimumDamage, int maximumDamage) : base(itemTypeId, name, price, true)
         {
             MinimumDamage = minimumDamage;
             MaximumDamage = maximumDamage;

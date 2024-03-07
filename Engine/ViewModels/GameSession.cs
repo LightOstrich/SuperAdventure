@@ -15,7 +15,7 @@ namespace Engine.ViewModels
         private Trader _currentTrader;
         private Player _currentPlayer;
 
-        public World CurrentWorld { get; set; }
+        public World CurrentWorld { get; }
         public Player CurrentPlayer
         {
             get
@@ -43,7 +43,7 @@ namespace Engine.ViewModels
             set
             {
                 _currentLocation = value;
-                OnPropertyChanged(nameof(CurrentLocation));
+                OnPropertyChanged();
                 OnPropertyChanged(nameof(HasLocationToNorth));
                 OnPropertyChanged(nameof(HasLocationToEast));
                 OnPropertyChanged(nameof(HasLocationToSouth));
@@ -70,7 +70,7 @@ namespace Engine.ViewModels
                     RaiseMessage("");
                     RaiseMessage($"You see a {CurrentMonster.Name} here!");
                 }
-                OnPropertyChanged(nameof(CurrentMonster));
+                OnPropertyChanged();
                 OnPropertyChanged(nameof(HasMonster));
             }
         }
@@ -80,7 +80,7 @@ namespace Engine.ViewModels
             set
             {
                 _currentTrader = value;
-                OnPropertyChanged(nameof(CurrentTrader));
+                OnPropertyChanged();
                 OnPropertyChanged(nameof(HasTrader));
             }
         }
