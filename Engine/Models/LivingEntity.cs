@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -6,6 +7,7 @@ namespace Engine.Models
 {
     public abstract class LivingEntity : BaseNotificationClass
     {
+        #region Properties
         private string _name;
         private int _currentHitPoints;
         private int _maximumHitPoints;
@@ -14,7 +16,7 @@ namespace Engine.Models
         public string Name
         {
             get => _name;
-            set
+            private set
             {
                 _name = value;
                 OnPropertyChanged(nameof(Name));
@@ -22,7 +24,8 @@ namespace Engine.Models
         }
         public int CurrentHitPoints
         {
-            get => _currentHitPoints; set
+            get => _currentHitPoints;
+            private set
             {
                 _currentHitPoints = value;
                 OnPropertyChanged(nameof(CurrentHitPoints));
@@ -30,7 +33,8 @@ namespace Engine.Models
         }
         public int MaximumHitPoints
         {
-            get => _maximumHitPoints; set
+            get => _maximumHitPoints;
+            private set
             {
                 _maximumHitPoints = value;
                 OnPropertyChanged(nameof(MaximumHitPoints));
@@ -38,7 +42,8 @@ namespace Engine.Models
         }
         public int Gold
         {
-            get => _gold; set
+            get => _gold;
+            private set
             {
                 _gold = value;
                 OnPropertyChanged(nameof(Gold));
@@ -47,10 +52,50 @@ namespace Engine.Models
         public ObservableCollection<GameItem> Inventory { get; set; }
         public ObservableCollection<GroupedInventoryItem> GroupedInventory { get; set; }
         public List<GameItem> Weapons => Inventory.Where(i => i is Weapon).ToList();
-        protected LivingEntity()
+        public bool IsDead => CurrentHitPoints <= 0;
+        #endregion
+        public event EventHandler OnKillead;
+        protected LivingEntity(string name, int maximumHitPoints, int currentHitPoints, int gold)
         {
+            Name = name;
+            MaximumHitPoints = maximumHitPoints;
+            CurrentHitPoints = currentHitPoints;
+            Gold = gold;
             Inventory = new ObservableCollection<GameItem>();
             GroupedInventory = new ObservableCollection<GroupedInventoryItem>();
+        }
+        public void TakeDamage(int hitPointsDamage)
+        {
+            CurrentHitPoints -= hitPointsDamage;
+            if (IsDead)
+            {
+                CurrentHitPoints = 0;
+                RaiseOnKilledEvent();
+            }
+        }
+        public void Heal(int hitPointsToHeal)
+        {
+            CurrentHitPoints += hitPointsToHeal;
+            if (CurrentHitPoints > MaximumHitPoints)
+            {
+                CurrentHitPoints = MaximumHitPoints;
+            }
+        }
+        public void CompletelyHeal()
+        {
+            CurrentHitPoints = MaximumHitPoints;
+        }
+        public void ReceiveGold(int amountOfGold)
+        {
+            Gold += amountOfGold;
+        }
+        public void SpendGold(int amountOfGold)
+        {
+            if (amountOfGold > Gold)
+            {
+                throw new ArgumentOutOfRangeException($"{Name} only has {Gold} gold, and cannot spend {amountOfGold} gold");
+            }
+            Gold -= amountOfGold;
         }
         public void AddItemToInventory(GameItem item)
         {
@@ -86,5 +131,11 @@ namespace Engine.Models
             }
             OnPropertyChanged(nameof(Weapons));
         }
+        #region Private functions
+        private void RaiseOnKilledEvent()
+        {
+            OnKillead?.Invoke(this, new System.EventArgs());
+        }
+        #endregion
     }
 }
