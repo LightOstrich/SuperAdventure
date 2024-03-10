@@ -1,9 +1,7 @@
 ﻿using Engine.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Engine.Actions;
 
 namespace Engine.Factories
 {
@@ -31,7 +29,9 @@ namespace Engine.Factories
         }
         private static void BuildWeapon(int id, string name, int price, int minimumDamage, int maximumDamage)
         {
-            _standardGameItems.Add(new GameItem(GameItem.ItemCategory.Weapon, id, name, price, true, minimumDamage, maximumDamage));
+            GameItem weapon = new GameItem(GameItem.ItemCategory.Weapon, id, name, price, true);
+            weapon.Action = new AttackWithWeapon(weapon, minimumDamage, maximumDamage);
+            _standardGameItems.Add(weapon);
         }
     }
 }
