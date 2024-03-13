@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Tracing;
 using System.Linq;
 
 namespace Engine.Models
@@ -190,6 +189,27 @@ namespace Engine.Models
                 }
             }
             OnPropertyChanged(nameof(Weapons));
+        }
+        public void RemoveItemsFromInventory(List<ItemQuantity> itemQuantities)
+        {
+            foreach (var itemQuantity in itemQuantities)
+            {
+                for (int i = 0; i < itemQuantity.Quantity; i++)
+                {
+                    RemoveItemFromInventory(Inventory.First(item => item.ItemTypeId == itemQuantity.ItemID));
+                }
+            }
+        }
+        public bool HasAllTheseItems(List<ItemQuantity> items)
+        {
+            foreach (ItemQuantity item in items)
+            {
+                if (Inventory.Count(i => i.ItemTypeId == item.ItemID) < item.Quantity)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         #region Private functions
         private void RaiseOnKilledEvent()

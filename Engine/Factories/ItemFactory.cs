@@ -46,5 +46,9 @@ namespace Engine.Factories
             item.Action = new Heal(item, hitPointsToHeal);
             _standardGameItems.Add(item);
         }
+        public static string ItemName(int itemTypeID)
+        {
+            return _standardGameItems.FirstOrDefault(i => i.ItemTypeId == itemTypeID)?.Name ?? "";
+        }
     }
 }

@@ -1,7 +1,4 @@
-﻿
-using System.Collections.ObjectModel;
-
-namespace Engine.Models
+﻿namespace Engine.Models
 {
     public class Trader : LivingEntity
     {
