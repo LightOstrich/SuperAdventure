@@ -8,8 +8,8 @@
         xmlns:local="clr-namespace:WPFUI"
         mc:Ignorable="d"
         FontSize="11pt"
-        Title="GAME" Height="768" Width="1024">
-
+        Title="GAME" Height="768" Width="1024"
+        KeyDown="MainWindow_OnKeyDown">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
     </Window.Resources>
