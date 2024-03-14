@@ -138,23 +138,23 @@
                 </Grid>
             </Border>
         </Grid>
-        <!-- Inventory and Quests -->
+        <!-- Inventory, Quests and Recipes-->
         <Grid Grid.Row="2" Grid.Column="0" Background="BurlyWood">
-            <TabControl>
+            <TabControl x:Name="PlayerDataTabControl">
                 <TabItem Header="Inventory">
                     <DataGrid ItemsSource="{Binding CurrentPlayer.GroupedInventory}" AutoGenerateColumns="False" HeadersVisibility="Column">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Description" IsReadOnly="True" Binding="{Binding Item.Name}" Width="*"/>
-                            <DataGridTextColumn Header="Qty" IsReadOnly="True" Binding="{Binding Quantity}" Width="*"/>
-                            <DataGridTextColumn Header="Price" IsReadOnly="True" Binding="{Binding Item.Price}" Width="Auto"/>
+                            <DataGridTextColumn Header="Description" IsReadOnly="True" Binding="{Binding Item.Name, Mode=OneWay}" Width="*"/>
+                            <DataGridTextColumn Header="Qty" IsReadOnly="True" Binding="{Binding Quantity, Mode=OneWay}" Width="*"/>
+                            <DataGridTextColumn Header="Price" IsReadOnly="True" Binding="{Binding Item.Price, Mode=OneWay}" Width="Auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="Quests">
                     <DataGrid ItemsSource="{Binding CurrentPlayer.Quests}" AutoGenerateColumns="False" HeadersVisibility="Column">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding PlayerQuest.Name}" Width="*"/>
-                            <DataGridTextColumn Header="Done?" Binding="{Binding isComplited}" Width="Auto"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding PlayerQuest.Name, Mode=OneWay}" Width="*"/>
+                            <DataGridTextColumn Header="Done?" Binding="{Binding isComplited, Mode=OneWay}" Width="Auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
@@ -164,7 +164,7 @@
                               HeadersVisibility="Column">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name"
-                                                Binding="{Binding Name}"
+                                                Binding="{Binding Name, Mode=OneWay}"
                                                 Width="*"/>
                             <DataGridTemplateColumn MinWidth="75">
                                 <DataGridTemplateColumn.CellTemplate>
