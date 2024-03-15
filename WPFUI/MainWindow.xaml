@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:Engine.ViewModels;assembly=Engine"
-        d:DataContext="{d:DesignInstance viewModels:GameSession}"
+        d:DataContext="{Binding GameSession}"
         xmlns:local="clr-namespace:WPFUI"
         mc:Ignorable="d"
         FontSize="11pt"
@@ -101,7 +101,8 @@
                            VerticalAlignment="Center" 
                            Height="125" 
                            Width="125" 
-                           Source="{Binding CurrentLocation.ImageName}"/>
+                           Source="{Binding CurrentLocation.ImageName, 
+                                            Converter={StaticResource FileToBitmapConverter}}"/>
                     <TextBlock Grid.Row="2" 
                                HorizontalAlignment="Center" 
                                Text="{Binding CurrentLocation.Description}"
