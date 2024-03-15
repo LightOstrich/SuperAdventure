@@ -155,7 +155,14 @@
                 <TabItem Header="Quests">
                     <DataGrid ItemsSource="{Binding CurrentPlayer.Quests}" AutoGenerateColumns="False" HeadersVisibility="Column">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding PlayerQuest.Name, Mode=OneWay}" Width="*"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding PlayerQuest.Name, Mode=OneWay}" Width="*">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" 
+                                                Value="{Binding PlayerQuest.ToolTipContents}"/>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
                             <DataGridTextColumn Header="Done?" Binding="{Binding isComplited, Mode=OneWay}" Width="Auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -167,7 +174,14 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name"
                                                 Binding="{Binding Name, Mode=OneWay}"
-                                                Width="*"/>
+                                                Width="*">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="ToolTip" 
+                                                Value="{Binding ToolTipContents}"/>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
                             <DataGridTemplateColumn MinWidth="75">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

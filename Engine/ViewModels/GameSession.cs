@@ -153,8 +153,8 @@ namespace Engine.ViewModels
                         RaiseMessage("");
                         RaiseMessage($"You completed the '{quest.Name}' quest");
                         //Give the player the quest rewards
-                        RaiseMessage($"You receive {quest.RewardExpreiencePoints} experience points");
-                        CurrentPlayer.AddExperience(quest.RewardExpreiencePoints);
+                        RaiseMessage($"You receive {quest.RewardExperiencePoints} experience points");
+                        CurrentPlayer.AddExperience(quest.RewardExperiencePoints);
                         RaiseMessage($"You receive {quest.RewardGold} gold");
                         CurrentPlayer.ReceiveGold(quest.RewardGold);
                         foreach (var itemQuantity in quest.RewardItems)
@@ -186,7 +186,7 @@ namespace Engine.ViewModels
                         RaiseMessage($"{itemQuantity.Quantity} {ItemFactory.CreateGameItem(itemQuantity.ItemID).Name}");
                     }
                     RaiseMessage("And you will receive:");
-                    RaiseMessage($"{quest.RewardExpreiencePoints} expreience points");
+                    RaiseMessage($"{quest.RewardExperiencePoints} expreience points");
                     RaiseMessage($"{quest.RewardGold} gold");
                     foreach (var itemQuantity in quest.RewardItems)
                     {
