@@ -68,7 +68,7 @@ namespace Engine.Factories
             foreach (XmlNode questNode in quests)
             {
                 location.QuestsAvailableHere
-                        .Add(QuestFactory.GetQuestById(questNode.AttributeAsInt("ID")));
+                        .Add(QuestFactory.GetQuestByID(questNode.AttributeAsInt("ID")));
             }
         }
         private static void AddTrader(Location location, XmlNode traderHere)
@@ -78,7 +78,7 @@ namespace Engine.Factories
                 return;
             }
             location.TraderHere =
-                TraderFactory.GetTraderByName(traderHere.AttributeAsString("Name"));
+                TraderFactory.GetTraderByID(traderHere.AttributeAsInt("ID"));
         }
     }
 }
