@@ -11,7 +11,7 @@ namespace Engine.Models
             Consumable
         }
         public ItemCategory Category { get; }
-        public int ItemTypeId { get; }
+        public int ItemTypeID { get; }
         public string Name { get; }
         public int Price { get; }
         public bool IsUnique { get; }
@@ -19,7 +19,7 @@ namespace Engine.Models
         public GameItem(ItemCategory category, int itemTypeId, string name, int price, bool isUnique = false, IAction action = null)
         {
             Category = category;
-            ItemTypeId = itemTypeId;
+            ItemTypeID = itemTypeId;
             Name = name;
             Price = price;
             IsUnique = isUnique;
@@ -31,7 +31,7 @@ namespace Engine.Models
         }
         public GameItem Clone()
         {
-            return new GameItem(Category, ItemTypeId, Name, Price, IsUnique, Action);
+            return new GameItem(Category, ItemTypeID, Name, Price, IsUnique, Action);
         }
     }
 }

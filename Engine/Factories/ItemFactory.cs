@@ -29,11 +29,11 @@ namespace Engine.Factories
         }
         public static GameItem CreateGameItem(int itemTypeId)
         {
-            return _standardGameItems.FirstOrDefault(item => item.ItemTypeId == itemTypeId)?.Clone();
+            return _standardGameItems.FirstOrDefault(item => item.ItemTypeID == itemTypeId)?.Clone();
         }
         public static string ItemName(int itemTypeID)
         {
-            return _standardGameItems.FirstOrDefault(i => i.ItemTypeId == itemTypeID)?.Name ?? "";
+            return _standardGameItems.FirstOrDefault(i => i.ItemTypeID == itemTypeID)?.Name ?? "";
         }
         private static void LoadItemsFromNodes(XmlNodeList nodes)
         {
