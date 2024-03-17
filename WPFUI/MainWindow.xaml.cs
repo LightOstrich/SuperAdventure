@@ -1,5 +1,6 @@
 ﻿using Engine.EventArgs;
 using Engine.Models;
+using Engine.Services;
 using Engine.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,12 @@ namespace WPFUI
     {
         private readonly GameSession _gameSession = new GameSession();
         private readonly Dictionary<Key, Action> _userInputActions = new Dictionary<Key, Action>();
+        private readonly MessageBroker _messageBroker = MessageBroker.GetInstance();
         public MainWindow()
         {
             InitializeComponent();
             InitializeUserInputActions();
-            _gameSession.OnMessageRaised += OnGameMessageRaised;
+            _messageBroker.OnMessageRaised += OnGameMessageRaised;
             DataContext = _gameSession;
         }
 
