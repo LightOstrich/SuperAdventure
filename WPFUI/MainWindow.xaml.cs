@@ -2,54 +2,51 @@
 using Engine.Models;
 using Engine.Services;
 using Engine.ViewModels;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.ComponentModel;
-
+using WPFUI.Windows;
 namespace WPFUI
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly GameSession _gameSession;
-        private readonly Dictionary<Key, Action> _userInputActions = new Dictionary<Key, Action>();
+        private const string SAVE_GAME_FILE_EXTENSION = "soscsrpg";
         private readonly MessageBroker _messageBroker = MessageBroker.GetInstance();
+        private readonly Dictionary<Key, Action> _userInputActions =
+            new Dictionary<Key, Action>();
+        private GameSession _gameSession;
         public MainWindow()
         {
             InitializeComponent();
             InitializeUserInputActions();
-            _messageBroker.OnMessageRaised += OnGameMessageRaised;
-            _gameSession = SaveGameService.LoadLastSaveOrCreateNew();
-            DataContext = _gameSession;
+            SetActiveGameSessionTo(new GameSession());
         }
-
-        private void OnClick_MoveNorth(object sender, EventArgs e)
+        private void OnClick_MoveNorth(object sender, RoutedEventArgs e)
         {
             _gameSession.MoveNorth();
         }
-        private void OnClick_MoveWest(object sender, EventArgs e)
+        private void OnClick_MoveWest(object sender, RoutedEventArgs e)
         {
             _gameSession.MoveWest();
         }
-        private void OnClick_MoveEast(object sender, EventArgs e)
+        private void OnClick_MoveEast(object sender, RoutedEventArgs e)
         {
             _gameSession.MoveEast();
         }
-        private void OnClick_MoveSouth(object sender, EventArgs e)
+        private void OnClick_MoveSouth(object sender, RoutedEventArgs e)
         {
             _gameSession.MoveSouth();
         }
-        private void OnClick_AttackMonster(object sender, EventArgs e)
+        private void OnClick_AttackMonster(object sender, RoutedEventArgs e)
         {
             _gameSession.AttackCurrentMonster();
         }
-        private void OnClick_UseCurrentConsumable(object sender, EventArgs e)
+        private void OnClick_UseCurrentConsumable(object sender, RoutedEventArgs e)
         {
             _gameSession.UseCurrentConsumable();
         }
@@ -60,10 +57,13 @@ namespace WPFUI
         }
         private void OnClick_DisplayTradeScreen(object sender, RoutedEventArgs e)
         {
-            TradeScreen tradeScreen = new TradeScreen();
-            tradeScreen.Owner = this;
-            tradeScreen.DataContext = _gameSession;
-            tradeScreen.ShowDialog();
+            if (_gameSession.CurrentTrader != null)
+            {
+                TradeScreen tradeScreen = new TradeScreen();
+                tradeScreen.Owner = this;
+                tradeScreen.DataContext = _gameSession;
+                tradeScreen.ShowDialog();
+            }
         }
         private void OnClick_Craft(object sender, RoutedEventArgs e)
         {
@@ -104,9 +104,64 @@ namespace WPFUI
                 }
             }
         }
+        private void SetActiveGameSessionTo(GameSession gameSession)
+        {
+            // Unsubscribe from OnMessageRaised, or we will get double messages
+            _messageBroker.OnMessageRaised -= OnGameMessageRaised;
+            _gameSession = gameSession;
+            DataContext = _gameSession;
+            // Clear out previous game's messages
+            GameMessages.Document.Blocks.Clear();
+            _messageBroker.OnMessageRaised += OnGameMessageRaised;
+        }
+        private void StartNewGame_OnClick(object sender, RoutedEventArgs e)
+        {
+            SetActiveGameSessionTo(new GameSession());
+        }
+        private void LoadGame_OnClick(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog =
+                new OpenFileDialog
+                {
+                    InitialDirectory = AppDomain.CurrentDomain.BaseDirectory,
+                    Filter = $"Saved games (*.{SAVE_GAME_FILE_EXTENSION})|*.{SAVE_GAME_FILE_EXTENSION}"
+                };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                SetActiveGameSessionTo(SaveGameService.LoadLastSaveOrCreateNew(openFileDialog.FileName));
+            }
+        }
+        private void SaveGame_OnClick(object sender, RoutedEventArgs e)
+        {
+            SaveGame();
+        }
+        private void Exit_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
-            SaveGameService.Save(_gameSession);
+            YesNoWindow message =
+                new YesNoWindow("Save Game", "Do you want to save your game?");
+            message.Owner = GetWindow(this);
+            message.ShowDialog();
+            if (message.ClickedYes)
+            {
+                SaveGame();
+            }
+        }
+        private void SaveGame()
+        {
+            SaveFileDialog saveFileDialog =
+                new SaveFileDialog
+                {
+                    InitialDirectory = AppDomain.CurrentDomain.BaseDirectory,
+                    Filter = $"Saved games (*.{SAVE_GAME_FILE_EXTENSION})|*.{SAVE_GAME_FILE_EXTENSION}"
+                };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                SaveGameService.Save(_gameSession, saveFileDialog.FileName);
+            }
         }
     }
 }
