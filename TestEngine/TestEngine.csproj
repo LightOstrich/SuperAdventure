@@ -57,6 +57,7 @@
     <Compile Include="ViewModels\TestGameSession.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="TestFiles\SavedGames\Game_0_1_000.soscsrpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
