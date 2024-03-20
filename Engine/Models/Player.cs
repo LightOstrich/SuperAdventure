@@ -29,18 +29,16 @@ namespace Engine.Models
                 SetLevelAndMaximumHitPoints();
             }
         }
-        public ObservableCollection<QuestStatus> Quests { get; }
-        public ObservableCollection<Recipe> Recipes { get; }
+        public ObservableCollection<QuestStatus> Quests { get; } = new ObservableCollection<QuestStatus>();
+        public ObservableCollection<Recipe> Recipes { get; } = new ObservableCollection<Recipe>();
         #endregion
         public event EventHandler OnLeveledUp;
         public Player(string name, string characterClass, int experiencePoints,
-                      int maximumHitPoints, int currentHitPoints,int dexterity, int gold) :
+                      int maximumHitPoints, int currentHitPoints, int dexterity, int gold) :
             base(name, maximumHitPoints, currentHitPoints, dexterity, gold)
         {
             CharacterClass = characterClass;
             ExperiencePoints = experiencePoints;
-            Quests = new ObservableCollection<QuestStatus>();
-            Recipes = new ObservableCollection<Recipe>();
         }
         public void AddExperience(int experiencePoints)
         {
