@@ -20,15 +20,11 @@ namespace WPFUI
         private readonly Dictionary<Key, Action> _userInputActions =
             new Dictionary<Key, Action>();
         private GameSession _gameSession;
-        public MainWindow()
+        public MainWindow(Player player)
         {
             InitializeComponent();
             InitializeUserInputActions();
-            SetActiveGameSessionTo(new GameSession());
-        }
-        public MainWindow(Player player) : this()
-        {
-            _gameSession.CurrentPlayer = player;
+            SetActiveGameSessionTo(new GameSession(player, 0, 0));
         }
         private void OnClick_MoveNorth(object sender, RoutedEventArgs e)
         {
@@ -120,20 +116,20 @@ namespace WPFUI
         }
         private void StartNewGame_OnClick(object sender, RoutedEventArgs e)
         {
-            SetActiveGameSessionTo(new GameSession());
+            //SetActiveGameSessionTo(new GameSession());
         }
         private void LoadGame_OnClick(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog =
-                new OpenFileDialog
-                {
-                    InitialDirectory = AppDomain.CurrentDomain.BaseDirectory,
-                    Filter = $"Saved games (*.{SAVE_GAME_FILE_EXTENSION})|*.{SAVE_GAME_FILE_EXTENSION}"
-                };
-            if (openFileDialog.ShowDialog() == true)
-            {
-                SetActiveGameSessionTo(SaveGameService.LoadLastSaveOrCreateNew(openFileDialog.FileName));
-            }
+            //OpenFileDialog openFileDialog =
+            //    new OpenFileDialog
+            //    {
+            //        InitialDirectory = AppDomain.CurrentDomain.BaseDirectory,
+            //        Filter = $"Saved games (*.{SAVE_GAME_FILE_EXTENSION})|*.{SAVE_GAME_FILE_EXTENSION}"
+            //    };
+            //if (openFileDialog.ShowDialog() == true)
+            //{
+            //    SetActiveGameSessionTo(SaveGameService.LoadLastSaveOrCreateNew(openFileDialog.FileName));
+            //}
         }
         private void SaveGame_OnClick(object sender, RoutedEventArgs e)
         {
