@@ -35,7 +35,7 @@ namespace Engine.Services
                         {
                             race.PlayerAttributeModifiers.Add(new PlayerAttributeModifier
                             {
-                                AttributKey = chilToken.StringValueOf("Key"),
+                                AttributeKey = chilToken.StringValueOf("Key"),
                                 Modifier = chilToken.IntValueOf("Modifier")
                             });
                         }
