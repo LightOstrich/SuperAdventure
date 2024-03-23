@@ -1,13 +1,13 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFUI", "WPFUI\WPFUI.csproj", "{D2D7AFE5-7E29-4821-B19B-A4DD62FC6C5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFUI", "WPFUI\WPFUI.csproj", "{D2D7AFE5-7E29-4821-B19B-A4DD62FC6C5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{1AC43A72-0CDB-4B34-9C5B-96ACFDDFB168}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine", "Engine\Engine.csproj", "{1AC43A72-0CDB-4B34-9C5B-96ACFDDFB168}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEngine", "TestEngine\TestEngine.csproj", "{2A809FDE-50CA-4C62-94FC-C70703EB340A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestEngine", "TestEngine\TestEngine.csproj", "{2A809FDE-50CA-4C62-94FC-C70703EB340A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
