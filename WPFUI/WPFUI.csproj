@@ -15,4 +15,7 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(SolutionDir)GameFiles\*.*&quot; &quot;$(ProjectDir)$(OutDir)&quot; /s /y" />
+  </Target>
 </Project>
