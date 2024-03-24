@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System;
-namespace Engine.Services
+namespace Services
 {
     public static class LoggingService
     {

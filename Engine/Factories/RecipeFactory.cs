@@ -28,19 +28,19 @@ namespace Engine.Factories
         {
             foreach (XmlNode node in nodes)
             {
-                Recipe recipe =
-                    new Recipe(node.AttributeAsInt("ID"),
-                               node.SelectSingleNode("./Name")?.InnerText ?? "");
+                var ingredients = new List<ItemQuantity>();
                 foreach (XmlNode childNode in node.SelectNodes("./Ingredients/Item"))
                 {
-                    recipe.AddIngredient(childNode.AttributeAsInt("ID"),
-                                         childNode.AttributeAsInt("Quantity"));
+                    GameItem item = ItemFactory.CreateGameItem(childNode.AttributeAsInt("ID"));
+                    ingredients.Add(new ItemQuantity(item, childNode.AttributeAsInt("Quantity")));
                 }
+                var outputItems = new List<ItemQuantity>();
                 foreach (XmlNode childNode in node.SelectNodes("./OutputItems/Item"))
                 {
-                    recipe.AddOutputItem(childNode.AttributeAsInt("ID"),
-                                         childNode.AttributeAsInt("Quantity"));
+                    GameItem item = ItemFactory.CreateGameItem(childNode.AttributeAsInt("ID"));
+                    outputItems.Add(new ItemQuantity(item, childNode.AttributeAsInt("Quantity")));
                 }
+                Recipe recipe = new Recipe(node.AttributeAsInt("ID"), node.SelectSingleNode("./Name")?.InnerText ?? "", ingredients, outputItems);
                 _recipes.Add(recipe);
             }
         }
