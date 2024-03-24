@@ -1,13 +1,17 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using Engine.Factories;
 using Engine.Models;
 using Engine.Services;
 namespace Engine.ViewModels
 {
-    public class CharacterCreationViewModel : BaseNotificationClass
+    public class CharacterCreationViewModel : INotifyPropertyChanged
     {
         private Race _selectedRace;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public GameDetails GameDetails { get; }
         public Race SelectedRace
         {
@@ -15,7 +19,6 @@ namespace Engine.ViewModels
             set
             {
                 _selectedRace = value;
-                OnPropertyChanged();
             }
         }
         public string Name { get; set; }

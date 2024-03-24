@@ -15,7 +15,6 @@ namespace Engine.Models
             private set
             {
                 _experiencePoints = value;
-                OnPropertyChanged();
                 SetLevelAndMaximumHitPoints();
             }
         }
