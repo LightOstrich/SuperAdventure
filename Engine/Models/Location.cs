@@ -1,6 +1,4 @@
-﻿using Core;
-using Engine.Factories;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,42 +31,17 @@ namespace Engine.Models
 
         public void AddMonster(int monsterID, int chanceOfEncountering)
         {
-            if (MonstersHere.Exists(m => m.MonsterId == monsterID))
+            if (MonstersHere.Exists(m => m.MonsterID == monsterID))
             {
                 // This monster has already been added to this location.
                 // So, overwrite the ChanceOfEncountering with the new number.
-                MonstersHere.First(m => m.MonsterId == monsterID).ChanceOfEncountering = chanceOfEncountering;
+                MonstersHere.First(m => m.MonsterID == monsterID).ChanceOfEncountering = chanceOfEncountering;
             }
             else
             {
                 // This monster is not already at this location, so add it.
                 MonstersHere.Add(new MonsterEncounter(monsterID, chanceOfEncountering));
             }
-        }
-        public Monster GetMonster()
-        {
-            if (!MonstersHere.Any())
-            {
-                return null;
-            }
-            // Total the percentages of all monsters at this location.
-            int totalChance = MonstersHere.Sum(m => m.ChanceOfEncountering);
-            // Select a random number between 1 and the total (in case the total chances is not 100).
-            int randomNumber = DiceService.Instance.Roll(totalChance, 1).Value;
-            // Loop through the monster list, 
-            // adding the monster's percentage chance of appearing to the runningTotal variable.
-            // When the random number is lower than the runningTotal,
-            // that is the monster to return.
-            int runningTotal = 0;
-            foreach (var monsterEncounter in MonstersHere)
-            {
-                runningTotal += monsterEncounter.ChanceOfEncountering;
-                if (randomNumber <= runningTotal)
-                {
-                    return MonsterFactory.GetMonster(monsterEncounter.MonsterId);
-                }
-            }
-            return MonsterFactory.GetMonster(MonstersHere.Last().MonsterId);
         }
     }
 }
