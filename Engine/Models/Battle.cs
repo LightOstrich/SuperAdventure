@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Engine.Services;
 using Models.EventArgs;
-using Engine.Services;
+using System;
 namespace Engine.Models
 {
     public class Battle : IDisposable

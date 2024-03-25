@@ -1,9 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using Engine.Factories;
+﻿using Engine.Factories;
 using Engine.Models;
 using Engine.Services;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 namespace ViewModels
 {
     public class CharacterCreationViewModel : INotifyPropertyChanged

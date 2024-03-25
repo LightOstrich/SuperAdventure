@@ -72,6 +72,7 @@
     <PackageReference Include="System.Text.Json" Version="8.0.3" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 </Project>

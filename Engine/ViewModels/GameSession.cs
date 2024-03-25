@@ -2,8 +2,8 @@
 using Engine.Models;
 using Engine.Services;
 using Newtonsoft.Json;
-using System.Linq;
 using System.ComponentModel;
+using System.Linq;
 namespace Engine.ViewModels
 {
     public class GameSession : INotifyPropertyChanged

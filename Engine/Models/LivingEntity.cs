@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Engine.Services;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Engine.Services;
-using Newtonsoft.Json;
 namespace Engine.Models
 {
     public abstract class LivingEntity : INotifyPropertyChanged
