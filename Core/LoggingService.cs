@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System;
-namespace Services
+namespace Core
 {
     public static class LoggingService
     {

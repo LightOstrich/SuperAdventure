@@ -1,6 +1,4 @@
-﻿using Models.EventArgs;
-using System;
-namespace Engine.Services
+﻿namespace Core
 {
     public class MessageBroker
     {
@@ -16,7 +14,7 @@ namespace Engine.Services
         {
             return s_messageBroker;
         }
-        internal void RaiseMessage(string message)
+        public void RaiseMessage(string message)
         {
             OnMessageRaised?.Invoke(this, new GameMessageEventArgs(message));
         }

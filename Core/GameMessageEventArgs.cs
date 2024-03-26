@@ -1,4 +1,4 @@
-﻿namespace Models.EventArgs
+﻿namespace Core
 {
     public class GameMessageEventArgs : System.EventArgs
     {

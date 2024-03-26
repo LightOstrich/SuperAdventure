@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
-using Engine.Services;
-using Newtonsoft.Json;
+using Engine.Shared;
 namespace Engine.Models
 {
     public class Inventory
