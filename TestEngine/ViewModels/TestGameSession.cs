@@ -1,7 +1,7 @@
-﻿using Engine.Models;
-using Engine.ViewModels;
+﻿using Models;
+using ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace TestEngine.ViewModels
+namespace TestViewModels
 {
     [TestClass]
     public class TestGameSession

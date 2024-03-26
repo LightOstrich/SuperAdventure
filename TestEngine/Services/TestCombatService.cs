@@ -1,7 +1,7 @@
-﻿using Engine.Models;
-using Engine.Services;
+﻿using Models;
+using Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace TestEngine.Services
+namespace TestServices
 {
     [TestClass]
     public class TestCombatService

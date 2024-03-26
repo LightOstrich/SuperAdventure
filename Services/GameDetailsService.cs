@@ -1,0 +1,48 @@
+﻿using Models;
+using Models.Shared;
+using Newtonsoft.Json.Linq;
+
+namespace Services
+{
+    public static class GameDetailsService
+    {
+        public static GameDetails ReadGameDetails()
+        {
+            JObject gameDetailsJson = JObject.Parse(File.ReadAllText(".\\GameData\\GameDetails.json"));
+            GameDetails gameDetails = new GameDetails(gameDetailsJson.StringValueOf("Title"),
+                                                      gameDetailsJson.StringValueOf("SubTitle"),
+                                                      gameDetailsJson.StringValueOf("Version"));
+
+            foreach (JToken token in gameDetailsJson["PlayerAttributes"])
+            {
+                gameDetails.PlayerAttributes.Add(new PlayerAttribute(token.StringValueOf("Key"),
+                                                                     token.StringValueOf("DisplayName"),
+                                                                     token.StringValueOf("DiceNotation")));
+            }
+            if (gameDetailsJson["Races"] != null)
+            {
+                foreach (var token in gameDetailsJson["Races"])
+                {
+                    Race race = new Race
+                    {
+                        Key = token.StringValueOf("Key"),
+                        DisplayName = token.StringValueOf("DisplayName")
+                    };
+                    if (token["PlayerAttributeModifiers"] != null)
+                    {
+                        foreach (var chilToken in token["PlayerAttributeModifiers"])
+                        {
+                            race.PlayerAttributeModifiers.Add(new PlayerAttributeModifier
+                            {
+                                AttributeKey = chilToken.StringValueOf("Key"),
+                                Modifier = chilToken.IntValueOf("Modifier")
+                            });
+                        }
+                    }
+                    gameDetails.Races.Add(race);
+                }
+            }
+            return gameDetails;
+        }
+    }
+}

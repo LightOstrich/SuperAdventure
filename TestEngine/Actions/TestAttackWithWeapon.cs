@@ -1,9 +1,9 @@
 ﻿using System;
-using Engine.Actions;
-using Engine.Factories;
-using Engine.Models;
+using Models.Actions;
+using Services.Factories;
+using Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace TestEngine.Actions
+namespace TestModels.Actions
 {
     [TestClass]
     public class TestAttackWithWeapon

@@ -1,6 +1,6 @@
-﻿using Engine.Factories;
-using Engine.Models;
-using Engine.Services;
+﻿using Models;
+using Services;
+using Services.Factories;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 namespace ViewModels
