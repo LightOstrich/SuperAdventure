@@ -1,7 +1,7 @@
-﻿using Engine.Services;
-using Core;
-using System;
+﻿using Core;
+using Engine.Shared;
 using Models.EventArgs;
+using System;
 namespace Engine.Models
 {
     public class Battle : IDisposable
@@ -9,6 +9,11 @@ namespace Engine.Models
         private readonly MessageBroker _messageBroker = MessageBroker.GetInstance();
         private readonly Player _player;
         private readonly Monster _opponent;
+        public enum Combatant
+        {
+            Player,
+            Opponent
+        }
         public event EventHandler<CombatVictoryEventArgs> OnCombatVictory;
         public Battle(Player player, Monster opponent)
         {
@@ -19,7 +24,7 @@ namespace Engine.Models
             _opponent.OnKilled += OnOpponentKilled;
             _messageBroker.RaiseMessage("");
             _messageBroker.RaiseMessage($"You see a {_opponent.Name} here!");
-            if (CombatService.FirstAttacker(_player, _opponent) == CombatService.Combatant.Opponent)
+            if (FirstAttacker(_player, _opponent) == Combatant.Opponent)
             {
                 AttackPlayer();
             }
@@ -65,6 +70,21 @@ namespace Engine.Models
         private void OnCombatantActionPerformed(object sender, string result)
         {
             _messageBroker.RaiseMessage(result);
+        }
+        private static Combatant FirstAttacker(Player player, Monster opponent)
+        {
+            // Formula is: ((Dex(player)^2 - Dex(monster)^2)/10) + Random(-10/10)
+            // For dexterity values from 3 to 18, this should produce an offset of +/- 41.5
+            int playerDexterity = player.GetAttribute("DEX").ModifiedValue *
+                                  player.GetAttribute("DEX").ModifiedValue;
+            int opponentDexterity = opponent.GetAttribute("DEX").ModifiedValue *
+                                    opponent.GetAttribute("DEX").ModifiedValue;
+            decimal dexterityOffset = (playerDexterity - opponentDexterity) / 10m;
+            int randomOffset = DiceService.Instance.Roll(20).Value - 10;
+            decimal totalOffset = dexterityOffset + randomOffset;
+            return DiceService.Instance.Roll(100).Value <= 50 + totalOffset
+                       ? Combatant.Player
+                       : Combatant.Opponent;
         }
     }
 }
