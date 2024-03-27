@@ -74,6 +74,8 @@ namespace ViewModels
         [JsonIgnore]
         public Trader CurrentTrader { get; private set; }
         public PopupDetails InventoryDetails { get; private set; }
+        public PopupDetails QuestDetails { get; private set; }
+        public PopupDetails RecipesDetails { get; private set; }
         [JsonIgnore]
         public bool HasLocationToNorth =>
             CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate + 1) != null;
@@ -100,9 +102,29 @@ namespace ViewModels
             //Setup popup window properties
             InventoryDetails = new PopupDetails
             {
-                IsVisible = true,
-                Top = 255,
+                IsVisible = false,
+                Top = 500,
+                Left = 10,
+                MinHeight = 75,
+                MaxHeight = 175,
+                MinWidth = 250,
+                MaxWidth = 400
+            };
+            QuestDetails = new PopupDetails
+            {
+                IsVisible = false,
+                Top = 500,
                 Left = 275,
+                MinHeight = 75,
+                MaxHeight = 175,
+                MinWidth = 250,
+                MaxWidth = 400
+            };
+            RecipesDetails = new PopupDetails
+            {
+                IsVisible = false,
+                Top = 500,
+                Left = 575,
                 MinHeight = 75,
                 MaxHeight = 175,
                 MinWidth = 250,

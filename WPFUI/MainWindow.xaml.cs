@@ -90,8 +90,8 @@ namespace WPFUI
             _userInputActions.Add(Key.Z, () => _gameSession.AttackCurrentMonster());
             _userInputActions.Add(Key.C, () => _gameSession.UseCurrentConsumable());
             _userInputActions.Add(Key.I, () => _gameSession.InventoryDetails.IsVisible = !_gameSession.InventoryDetails.IsVisible);
-            _userInputActions.Add(Key.Q, () => SetTabFocusTo("QuestsTabItem"));
-            _userInputActions.Add(Key.R, () => SetTabFocusTo("RecipesTabItem"));
+            _userInputActions.Add(Key.Q, () => _gameSession.QuestDetails.IsVisible = !_gameSession.QuestDetails.IsVisible);
+            _userInputActions.Add(Key.R, () => _gameSession.RecipesDetails.IsVisible = !_gameSession.RecipesDetails.IsVisible);
             _userInputActions.Add(Key.T, () => OnClick_DisplayTradeScreen(this, new RoutedEventArgs()));
         }
         private void MainWindow_OnKeyDown(object sender, KeyEventArgs e)
@@ -100,20 +100,6 @@ namespace WPFUI
             {
                 _userInputActions[e.Key].Invoke();
                 e.Handled = true;
-            }
-        }
-        private void SetTabFocusTo(string tabName)
-        {
-            foreach (object item in PlayerDataTabControl.Items)
-            {
-                if (item is TabItem tabItem)
-                {
-                    if (tabItem.Name == tabName)
-                    {
-                        tabItem.IsSelected = true;
-                        return;
-                    }
-                }
             }
         }
         private void SetActiveGameSessionTo(GameSession gameSession)
@@ -173,6 +159,14 @@ namespace WPFUI
         private void CloseInventoryWindow_OnClick(object sender, RoutedEventArgs e)
         {
             _gameSession.InventoryDetails.IsVisible = false;
+        }
+        private void CloseQuestsWindow_OnClick(Object sender, RoutedEventArgs e)
+        {
+            _gameSession.QuestDetails.IsVisible = false;
+        }
+        private void CloseRecipesWindow_OnClick(Object sender, RoutedEventArgs e)
+        {
+            _gameSession.RecipesDetails.IsVisible = false;
         }
         private void GameCanvas_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
