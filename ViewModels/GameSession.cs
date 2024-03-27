@@ -73,6 +73,7 @@ namespace ViewModels
         }
         [JsonIgnore]
         public Trader CurrentTrader { get; private set; }
+        public PopupDetails PlayerDetails { get; private set; }
         public PopupDetails InventoryDetails { get; private set; }
         public PopupDetails QuestDetails { get; private set; }
         public PopupDetails RecipesDetails { get; private set; }
@@ -100,6 +101,16 @@ namespace ViewModels
             CurrentPlayer = player;
             CurrentLocation = CurrentWorld.LocationAt(xCoordinate, yCoordinate);
             //Setup popup window properties
+            PlayerDetails = new PopupDetails
+            {
+                IsVisible = false,
+                Top = 10,
+                Left = 10,
+                MinHeight = 75,
+                MaxHeight = 400,
+                MinWidth = 265,
+                MaxWidth = 400
+            };
             InventoryDetails = new PopupDetails
             {
                 IsVisible = false,

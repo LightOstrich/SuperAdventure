@@ -49,6 +49,8 @@ namespace Models
             }
         }
         [JsonIgnore]
+        public string HitPoints => $"{CurrentHitPoints}/{MaximumHitPoints}";
+        [JsonIgnore]
         public bool IsAlive => CurrentHitPoints > 0;
         [JsonIgnore]
         public bool IsDead => !IsAlive;

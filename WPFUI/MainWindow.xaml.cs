@@ -92,6 +92,7 @@ namespace WPFUI
             _userInputActions.Add(Key.I, () => _gameSession.InventoryDetails.IsVisible = !_gameSession.InventoryDetails.IsVisible);
             _userInputActions.Add(Key.Q, () => _gameSession.QuestDetails.IsVisible = !_gameSession.QuestDetails.IsVisible);
             _userInputActions.Add(Key.R, () => _gameSession.RecipesDetails.IsVisible = !_gameSession.RecipesDetails.IsVisible);
+            _userInputActions.Add(Key.P, () => _gameSession.PlayerDetails.IsVisible = !_gameSession.PlayerDetails.IsVisible);
             _userInputActions.Add(Key.T, () => OnClick_DisplayTradeScreen(this, new RoutedEventArgs()));
         }
         private void MainWindow_OnKeyDown(object sender, KeyEventArgs e)
@@ -155,6 +156,10 @@ namespace WPFUI
                                      _gameSession.CurrentLocation.XCoordinate,
                                      _gameSession.CurrentLocation.YCoordinate), saveFileDialog.FileName);
             }
+        }
+        private void ClosePlayerDetailsWindow_OnClick(object sender, RoutedEventArgs e)
+        {
+            _gameSession.PlayerDetails.IsVisible = false;
         }
         private void CloseInventoryWindow_OnClick(object sender, RoutedEventArgs e)
         {
