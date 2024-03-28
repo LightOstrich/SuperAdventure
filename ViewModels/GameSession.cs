@@ -3,10 +3,11 @@ using Models;
 using Newtonsoft.Json;
 using Services;
 using Services.Factories;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 namespace ViewModels
 {
-    public class GameSession : INotifyPropertyChanged
+    public class GameSession : INotifyPropertyChanged, IDisposable
     {
         private readonly MessageBroker _messageBroker = MessageBroker.GetInstance();
         #region Properties
@@ -73,10 +74,13 @@ namespace ViewModels
         }
         [JsonIgnore]
         public Trader CurrentTrader { get; private set; }
+        [JsonIgnore]
+        public ObservableCollection<string> GameMessages { get; } = new ObservableCollection<string>();
         public PopupDetails PlayerDetails { get; private set; }
         public PopupDetails InventoryDetails { get; private set; }
         public PopupDetails QuestDetails { get; private set; }
         public PopupDetails RecipesDetails { get; private set; }
+        public PopupDetails GameMessagesDetails { get; set; }
         [JsonIgnore]
         public bool HasLocationToNorth =>
             CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate + 1) != null;
@@ -141,6 +145,17 @@ namespace ViewModels
                 MinWidth = 250,
                 MaxWidth = 400
             };
+            GameMessagesDetails = new PopupDetails
+            {
+                IsVisible = false,
+                Top = 250,
+                Left = 10,
+                MinHeight = 75,
+                MaxHeight = 175,
+                MinWidth = 350,
+                MaxWidth = 400
+            };
+            _messageBroker.OnMessageRaised += OnGameMessageRaised;
         }
         public void MoveNorth()
         {
@@ -173,6 +188,14 @@ namespace ViewModels
         private void PopulateGameDetails()
         {
             GameDetails = GameDetailsService.ReadGameDetails();
+        }
+        private void OnGameMessageRaised(object sender, GameMessageEventArgs e)
+        {
+            if (GameMessages.Count > 250)
+            {
+                GameMessages.RemoveAt(0);
+            }
+            GameMessages.Add(e.Message);
         }
         private void CompleteQuestsAtLocation()
         {
@@ -297,6 +320,11 @@ namespace ViewModels
         private void OnCurrentPlayerLeveledUp(object sender, System.EventArgs eventArgs)
         {
             _messageBroker.RaiseMessage($"You are now level {CurrentPlayer.Level}!");
+        }
+        public void Dispose()
+        {
+            _currentBattle?.Dispose();
+            _messageBroker.OnMessageRaised -= OnGameMessageRaised;
         }
     }
 }
